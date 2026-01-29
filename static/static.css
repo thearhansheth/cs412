@@ -1,0 +1,115 @@
+/* 
+File: static.css 
+Author: Arhan Sheth, 1/29/2026 
+Email: aksheth@bu.edu
+Description: Styling page for Tyrion Lannister Quotes web-application 
+*/
+
+body {
+    font-family: "Georgia", "Times New Roman", serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f3efe4;
+    color: #2b1a16;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+nav {
+    background-color: #000000;
+    padding: 10px 0;
+    border-bottom: 2px solid #7a0000;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 25px;
+}
+
+nav ul li a {
+    color: #f5de9c;
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+}
+
+nav ul li a:hover {
+    border-bottom-color: #f5de9c;
+}
+
+#content-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px 25px 40px 25px;
+    background-color: #fbf8f1;
+    border-radius: 8px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.18);
+    text-align: center;
+}
+
+h2 {
+    color: #7a0000;
+    margin-top: 0;
+    font-size: 1.6rem;
+}
+
+.quote-text {
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #7a0000;
+    margin: 20px auto 28px auto;
+    max-width: 720px;
+}
+
+.quote-image-wrapper {
+    margin-top: 10px;
+}
+
+img {
+    max-width: 260px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 3px solid #7a0000;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 12px 0;
+}
+
+a {
+    color: #b88b35;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background-color: #7a0000;
+    color: #f5de9c;
+    text-align: center;
+    padding: 14px 10px;
+    margin-top: 40px;
+    font-size: 0.9rem;
+    border-top: 3px solid #200000;
+}

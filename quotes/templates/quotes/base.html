@@ -1,0 +1,34 @@
+<!--
+File: templates/quotes/base.html 
+Author: Arhan Sheth, 1/29/2026
+Email: aksheth@bu.edu
+Description: Base template page for Quotes Application -->
+
+
+{% load static %}
+<html>
+    <head>
+        <title>Quotes Application</title>
+        <link rel="stylesheet" href="{% static 'static.css' %}">
+    </head>
+    <body>
+        <h1>Tyrion Lannister Quote of the Day</h1>
+        <nav>
+            <ul>
+               <li><a href="{% url 'quote_page' %}">Quote of the Day</a></li>
+                <li><a href="{% url 'show_all_page' %}">Show all</a></li>
+                <li><a href="{% url 'about_page' %}">About</a></li> 
+            </ul>
+            
+        </nav>
+        <div id="content-container">
+            {% block content %}
+            {% endblock %}
+        </div>
+        
+    </body>
+    <footer>
+        Developed by Arhan Sheth.
+        Generated at {{time}}.
+    </footer>
+</html>

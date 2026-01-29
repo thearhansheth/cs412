@@ -1,0 +1,13 @@
+<!--
+File: templates/quotes/quote.html 
+Author: Arhan Sheth, 1/29/2026
+Email: aksheth@bu.edu
+Description: Page to display singular quote for Quotes Application -->
+
+{% extends 'quotes/base.html' %}
+{% load static %}
+
+    {% block content %}
+    <h2>{{quote}}</h2><br>
+    <img src="{{ image }}" alt="Tyrion Lannister">
+    {% endblock %}

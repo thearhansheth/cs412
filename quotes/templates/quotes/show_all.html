@@ -1,0 +1,19 @@
+<!--
+File: templates/quotes/show_all.html 
+Author: Arhan Sheth, 1/29/2026
+Email: aksheth@bu.edu
+Description: Page to display all quotes and pictures for Quotes Application -->
+
+
+{% extends 'quotes/base.html' %}
+{% block content %}
+    <h2>All Tyrion Lannister Quotes</h2>
+    {% for quote in quotes %}
+        <p>{{ quote }}</p>
+    {% endfor %}
+    
+    <h2>All Tyrion Lannister Pictures</h2>
+    {% for image in images %}
+        <img src="{{ image }}" alt="Tyrion Lannister">
+    {% endfor %}
+{% endblock %}
