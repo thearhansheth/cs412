@@ -1,0 +1,75 @@
+<!--
+File: templates/restaurant/order.html 
+Author: Arhan Sheth, 2/05/2026
+Email: aksheth@bu.edu
+Description: Order page for Restaurant Application -->
+
+{% extends 'restaurant/base.html' %}
+{% load static %}
+    {% block content %}
+        <h2>Place an Order</h2>
+
+        <form action="{% url 'confirmation_page' %}" method="POST">
+            {% csrf_token %}
+            <div id="form-content">
+                <h3>Select your entree:</h3>
+                <input type="checkbox" name="entree" value="Fried Rice $12" id="entree1">
+                <label for="entree1">Fried Rice $12</label><br>
+
+                <div style="margin-left: 20px;">
+                    <small>Protein upgrade:</small><br>
+                    <input type="checkbox" name="entree" value="Chicken $3" id="chicken" disabled>
+                    <label for="chicken">Chicken $3</label><br>
+                </div>
+
+                <input type="checkbox" name="entree" value="Noodles $10">
+                <label for="entree2">Noodles $10</label><br>
+
+                <input type="checkbox" name="entree" value="Steamed Veggies $10">
+                <label for="entree3">Steamed Veggies $10</label><br>
+
+                <input type="checkbox" name="entree" value="A La Carte Bowl $15">
+                <label for="entree4">A La Carte Bowl $15</label><br><br>
+
+
+                <h2>Today's special:</h2>
+                <input type="checkbox" id="special" name="special">
+                <label for="special">{{special}}</label><br>
+
+                <h2>Instructions:</h2>
+                <label for="instructions">Please share any specific instructions:</label><br><br>
+                <input type="text" id="instructions" name="instructions"><br><br>
+
+                <div id="customer-info">
+                    <h2>Customer information:</h2>
+                    <label for="customer-name">Name:</label>
+                    <input type="text" id="customer-name" name="customer-name" required><br>
+
+                    <label for="customer-phone">Phone:</label>
+                    <input type="text" id="customer-phone" name="customer-phone" required><br>
+
+                    <label for="customer-email">Email:</label>
+                    <input type="text" id="customer-email" name="customer-email" required><br> 
+                </div>
+                
+                <h2>Place your order:</h2>
+                <input type="submit">
+            </div>
+            
+        </form>
+
+        <script>
+            const rice = document.getElementById('entree1');
+            const chicken = document.getElementById('chicken');
+
+            rice.addEventListener('change', function() {
+                if (this.checked) {
+                    chicken.disabled = false;
+                } else {
+                    chicken.disabled = true;
+                    chicken.checked = false;
+                }
+            });
+        </script>
+    
+    {% endblock %}
