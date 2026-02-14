@@ -1,0 +1,27 @@
+<!--
+File: templates/miniinsta/show_profile.html 
+Author: Arhan Sheth, 2/13/2026
+Email: aksheth@bu.edu
+Description: Profile page for Mini Insta -->
+
+{% extends 'miniinsta/base.html' %}
+<!-- displays a single profile -->
+
+{% block content %}
+<div id="view-height">
+        <div id="insta-bio">
+            <div id="insta-bio-name">
+                <h2>{{profile.username}}</h2>
+                <h3>{{profile.display_name}}</h3>
+                <h3>{{profile.bio_text}}</h3>
+                <h3>Joined: {{profile.join_date}}</h3>
+                <h3>Followers: 0</a></h3>
+                <h3>Following: 0</h3>
+            </div>
+            <div id="insta-bio-image">
+                <img src="{{profile.profile_image_url}}">
+            </div>
+        </div>
+    
+</div>
+{% endblock %}

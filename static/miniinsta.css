@@ -1,0 +1,99 @@
+/* 
+File: miniinsta.css 
+Author: Arhan Sheth, 2/13/2026 
+Email: aksheth@bu.edu
+Description: Styling page for Mini Insta
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #fafafa;
+}
+
+h1 {
+    text-align: center;
+    background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
+    color: white;
+    padding: 20px;
+    border: none;
+}
+
+#content-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+    background-color: white;
+    border-top: 2px solid #dbdbdb;
+    color: #8e8e8e;
+}
+
+/* Profile list page */
+#instagram-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+#insta-profile {
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    padding: 20px;
+    text-align: center;
+}
+
+#insta-container-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #fd1d1d;
+}
+
+#insta-container-name a {
+    text-decoration: none;
+    color: #262626;
+}
+
+#insta-container-name h2 {
+    margin: 10px 0;
+    color: #262626;
+}
+
+#insta-container-name h3 {
+    margin: 5px 0;
+    color: #8e8e8e;
+    font-weight: normal;
+}
+
+/* Single profile page */
+#insta-bio {
+    display: flex;
+    gap: 40px;
+    padding: 30px;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+}
+
+#insta-bio-image img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px solid #fd1d1d;
+}
+
+#insta-bio-name h2 {
+    margin: 10px 0;
+    color: #262626;
+}
+
+#insta-bio-name h3 {
+    margin: 8px 0;
+    font-weight: normal;
+    color: #8e8e8e;
+}
