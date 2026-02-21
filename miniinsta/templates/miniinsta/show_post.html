@@ -1,0 +1,23 @@
+<!--
+File: templates/miniinsta/show_post.html 
+Author: Arhan Sheth, 2/20/2026
+Email: aksheth@bu.edu
+Description: Display post page for Mini Insta -->
+
+{% extends 'miniinsta/base.html' %}
+
+{% block content %}
+<div id="post-detail">
+    <h2>{{ post.profile }}</h2>
+    <p>{{ post.timestamp }}</p>
+    <p>{{ post.caption }}</p>
+
+    <div id="post-photos">
+        {% for photo in post.get_all_photos %}
+            <img src="{{ photo.image_url }}" alt="post photo">
+        {% empty %}
+            <img src="https://ih1.redbubble.net/image.4905811472.8675/st,extra_large,507x507-pad,600x600,f8f8f8.jpg" alt="no image">
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
