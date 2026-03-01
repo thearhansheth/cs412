@@ -1,0 +1,22 @@
+<!--
+File: templates/miniinsta/show_followers.html 
+Author: Arhan Sheth, 3/1/2026
+Email: aksheth@bu.edu
+Description: Show Followers page for Mini Insta -->
+
+{% extends 'miniinsta/base.html' %}
+<h1>Showing all followers</h1>
+
+{% block content %}
+
+    {% if followers %}
+        <ul>
+        {% for profile in followers %}
+            <li><a href="{% url 'show_profile' profile.pk %}">{{ profile.display_name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No followers</p>
+    {% endif %}
+
+{% endblock %}

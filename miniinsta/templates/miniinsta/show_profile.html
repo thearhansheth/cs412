@@ -11,16 +11,19 @@ Description: Profile page for Mini Insta -->
 <div id="view-height">
     <!-- Bio Section -->
     <div id="insta-bio">
+        <div id="insta-bio-image">
+            <img src="{{profile.profile_image_url}}">
+        </div>
         <div id="insta-bio-name">
             <h2>{{profile.username}}</h2>
             <h3>{{profile.display_name}}</h3>
             <h3>{{profile.bio_text}}</h3>
             <h3>Joined: {{profile.join_date}}</h3>
-            <h3>Followers: 0</h3>
-            <h3>Following: 0</h3>
-        </div>
-        <div id="insta-bio-image">
-            <img src="{{profile.profile_image_url}}">
+            <h3><a href="{% url 'show_followers' profile.pk %}">Followers: {{profile.get_num_followers}}</a></h3>
+            <h3><a href="{% url 'show_following' profile.pk %}">Following: {{profile.get_num_following}}</a></h3>
+            <div class="button-container">
+                <button class="update-profile-button"><a href="{% url 'update_profile' profile.pk %}">Update Profile</a></button>
+            </div>
         </div>
     </div>
     <!-- End of Bio Section -->
@@ -29,17 +32,14 @@ Description: Profile page for Mini Insta -->
     <div id="profile-posts">
         {% for post in profile.get_all_posts %}
             <a href="{% url 'show_post' post.pk %}">
-                {% with first_photo=post.get_all_photos.first %}
-                    {% if first_photo %}
-                        <img src="{{ first_photo.image_url }}" alt="{{ post.caption }}">
+                {% with photos=post.get_all_photos %}
+                    {% if photos %}
+                        <img src="{{ photos.first.get_image_url }}" alt="post image">
                     {% else %}
                         <img src="https://ih1.redbubble.net/image.4905811472.8675/st,extra_large,507x507-pad,600x600,f8f8f8.jpg" alt="no image">
                     {% endif %}
                 {% endwith %}
-                <p>{{ post.caption }}</p>
             </a>
-        {% empty %}
-            <p>No posts yet.</p>
         {% endfor %}
     </div>
     <!-- End of Posts Grid -->

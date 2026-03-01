@@ -1,0 +1,25 @@
+<!--
+File: templates/miniinsta/update_post_form.html 
+Author: Arhan Sheth, 3/1/2026
+Email: aksheth@bu.edu
+Description: Page to update post form for Mini Insta -->
+
+{% extends 'miniiinsta/base.html' %}
+
+{% block content %}
+<div id="create-post-form">
+    <h1>Update Post</h1>
+    <form action="{% url 'update_post' post.pk %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <br><br>
+        <input type="submit" name="submit" value="Update">
+    </form>
+    
+    <form action="{% url 'show_profile' profile.pk %}" method="GET">
+    <input type="submit" value="Cancel">
+    </form>
+</div>
+{% endblock %}

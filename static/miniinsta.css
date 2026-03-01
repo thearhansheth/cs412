@@ -1,8 +1,8 @@
 /* 
 File: miniinsta.css 
-Author: Arhan Sheth, 2/13/2026 
+Author: Arhan Sheth, 3/1/2026 
 Email: aksheth@bu.edu
-Description: Styling page for Mini Insta
+Description: Revamped Styling page for Mini Insta
 */
 
 body {
@@ -14,24 +14,45 @@ body {
 
 h1 {
     text-align: center;
-    background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
-    color: white;
+    background-color: white;
+    color: #262626;
     padding: 20px;
     border: none;
+    border-bottom: 1px solid #dbdbdb;
+    font-size: 22px;
+    letter-spacing: -0.5px;
 }
 
 #content-container {
     max-width: 1000px;
     margin: 0 auto;
+    padding-bottom: 80px;
 }
 
 footer {
-    text-align: center;
-    margin-top: 30px;
-    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: white;
-    border-top: 2px solid #dbdbdb;
-    color: #8e8e8e;
+    border-top: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 0;
+}
+
+footer a {
+    font-size: 24px;
+    text-decoration: none;
+    color: #262626;
+}
+
+.footer-profile-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 /* Profile list page */
@@ -52,7 +73,7 @@ footer {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 3px solid #fd1d1d;
+    border: 1px solid #dbdbdb;
 }
 
 #insta-container-name a {
@@ -74,6 +95,7 @@ footer {
 /* Single profile page */
 #insta-bio {
     display: flex;
+    flex-wrap: wrap;
     gap: 40px;
     padding: 30px;
     background-color: white;
@@ -84,18 +106,54 @@ footer {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    border: 3px solid #fd1d1d;
+    border: 1px solid #dbdbdb;
 }
 
 #insta-bio-name h2 {
     margin: 10px 0;
     color: #262626;
+    font-size: 20px;
+    font-weight: 300;
 }
 
 #insta-bio-name h3 {
     margin: 8px 0;
     font-weight: normal;
     color: #8e8e8e;
+}
+
+#insta-bio-name h3 a {
+    text-decoration: none;
+    color: #262626;
+    font-weight: 600;
+}
+
+#insta-bio-name h3 a:hover {
+    color: #0095f6;
+}
+
+.button-container {
+    margin-top: 12px;
+}
+
+.update-profile-button {
+    background-color: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.update-profile-button a {
+    color: white;
+    text-decoration: none;
+}
+
+.update-profile-button:hover {
+    background-color: #1877f2;
 }
 
 /* Profile posts grid */
@@ -182,7 +240,73 @@ footer {
     object-fit: cover;
 }
 
-/* Create post form */
+/* Update / Delete post buttons */
+#post-delete a, #post-update a {
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#post-delete a {
+    background-color: #ed4956;
+    color: white;
+}
+
+#post-delete a:hover {
+    background-color: #c0313d;
+}
+
+#post-update a {
+    background-color: #0095f6;
+    color: white;
+}
+
+#post-update a:hover {
+    background-color: #1877f2;
+}
+
+#post-delete, #post-update {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+/* Likes */
+#likes {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #262626;
+}
+
+#likes p {
+    margin: 0;
+}
+
+#likes strong {
+    font-weight: 700;
+}
+
+/* Comments */
+#comments {
+    margin: 8px 0;
+    border-top: 1px solid #dbdbdb;
+    padding-top: 8px;
+}
+
+#comments p {
+    font-size: 14px;
+    color: #262626;
+    margin: 6px 0;
+}
+
+#comments strong {
+    font-weight: 700;
+    margin-right: 4px;
+}
+
+/* Create/Update post form */
 form {
     max-width: 500px;
     margin: 20px auto;
@@ -209,6 +333,7 @@ form label {
 
 form input[type="text"],
 form input[type="url"],
+form input[type="file"],
 form textarea,
 form select {
     width: 100%;
@@ -230,12 +355,12 @@ form input:focus,
 form textarea:focus,
 form select:focus {
     outline: none;
-    border-color: #0095f6;
+    border-color: #a8a8a8;
 }
 
 form button,
 form input[type="submit"] {
-    background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
+    background-color: #0095f6;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -244,12 +369,12 @@ form input[type="submit"] {
     font-size: 14px;
     font-weight: 600;
     margin-right: 10px;
-    transition: opacity 0.2s;
+    transition: background-color 0.2s;
 }
 
 form button:hover,
 form input[type="submit"]:hover {
-    opacity: 0.9;
+    background-color: #1877f2;
 }
 
 form a {
@@ -284,7 +409,137 @@ nav a {
 }
 
 nav a:hover {
-    color: #00376b;
+    color: #1877f2;
+}
+
+/* Feed */
+.posts-container {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.space-container {
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+}
+
+.profile-container-left img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #dbdbdb;
+}
+
+.profile-container-right a {
+    text-decoration: none;
+    color: #262626;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.profile-container-right a:hover {
+    color: #0095f6;
+}
+
+.post-image {
+    width: 100%;
+    object-fit: cover;
+}
+
+.post-caption {
+    padding: 12px;
+}
+
+.post-caption p {
+    font-size: 14px;
+    color: #262626;
+    margin: 4px 0;
+}
+
+.post-caption strong {
+    font-weight: 700;
+    margin-right: 4px;
+}
+
+.likes p {
+    font-size: 14px;
+    font-weight: 700;
+    color: #262626;
+    margin: 6px 0;
+}
+
+/* Search */
+.search-post-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Followers / Following lists */
+#followers-list,
+#following-list {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    padding: 20px;
+}
+
+#followers-list h2,
+#following-list h2 {
+    font-size: 18px;
+    color: #262626;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.follower-item,
+.following-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #fafafa;
+}
+
+.follower-item img,
+.following-item img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #dbdbdb;
+}
+
+.follower-item a,
+.following-item a {
+    text-decoration: none;
+    color: #262626;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.follower-item a:hover,
+.following-item a:hover {
+    color: #0095f6;
 }
 
 /* Responsive design */
@@ -292,10 +547,18 @@ nav a:hover {
     #profile-posts {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    #instagram-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 480px) {
     #profile-posts {
+        grid-template-columns: 1fr;
+    }
+
+    #instagram-container {
         grid-template-columns: 1fr;
     }
 }

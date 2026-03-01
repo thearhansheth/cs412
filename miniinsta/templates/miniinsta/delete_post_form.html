@@ -1,0 +1,26 @@
+<!--
+File: templates/miniinsta/delete_post_form.html 
+Author: Arhan Sheth, 3/1/2026
+Email: aksheth@bu.edu
+Description: Delete Post Form page for Mini Insta -->
+
+{% extends 'miniinsta/base.html' %}
+
+{% block content %}
+<div id="create-post-form">
+    <h1>Delete Post</h1>
+    <h2>Are you sure you want to delete this post?</h2>
+    <form action="{% url 'delete_post' post.pk %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <br><br>
+        <input type="submit" name="submit" value="Delete">
+    </form>
+    
+    <form action="{% url 'show_profile' profile.pk %}" method="GET">
+    <input type="submit" value="Cancel">
+    </form>
+</div>
+{% endblock %}

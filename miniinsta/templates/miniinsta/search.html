@@ -1,0 +1,18 @@
+<!--
+File: templates/miniinsta/search.html 
+Author: Arhan Sheth, 3/1/2026
+Email: aksheth@bu.edu
+Description: Search page for Mini Insta -->
+
+
+{% extends 'miniinsta/base.html' %}
+
+{% block content %}
+<h1>Search</h1>
+
+<form action="{% url 'show_search' profile.pk %}" method="get">
+    Search for text, tag or people: <input type="text" name="q">
+    <button type="submit">Search</button>
+</form>
+
+{% endblock %}
