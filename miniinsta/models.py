@@ -5,6 +5,7 @@
 
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Profile(models.Model):
@@ -17,6 +18,8 @@ class Profile(models.Model):
     profile_image_url = models.URLField(blank=True)
     bio_text = models.TextField(blank=True)
     join_date = models.DateTimeField(auto_now=True)
+    # foreign key
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         """Return a string representation of this model instance
@@ -109,6 +112,11 @@ class Post(models.Model):
         """
         likes = Like.objects.filter(post=self).count()
         return (likes - 1)
+    
+    def get_likes_profiles(self):
+        """Return a list of profiles that liked this post
+        """
+        return [like.profile for like in Like.objects.filter(post=self)]
     
 class Photo(models.Model):
     """Encapsulate the data attributes of an image associated with a Post

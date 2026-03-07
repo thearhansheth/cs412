@@ -19,6 +19,22 @@ Description: Display post page for Mini Insta -->
         {% endfor %}
     </div>
 
+    {% if request.user.is_authenticated and request.user != post.profile.user %}
+        {% with logged_in_profile=request.user.profile_set.first %}
+            {% if logged_in_profile in post.get_likes_profiles %}
+                <form method="POST" action="{% url 'delete_like' post.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="unlike-btn">Unlike</button>
+                </form>
+            {% else %}
+                <form method="POST" action="{% url 'like_post' post.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="like-btn">❤️ Like</button>
+                </form>
+            {% endif %}
+        {% endwith %}
+    {% endif %}
+
     <div id="likes">
         {% if post.get_first_like %}
             <p>Liked by
@@ -38,6 +54,8 @@ Description: Display post page for Mini Insta -->
             {% endfor %}
     </div>
 
+    {% if request.user.is_authenticated and request.user == post.profile.user %}
+
     <div id="post-delete">
         <a href="{% url 'delete_post' post.pk %}">Delete Post</a>
     </div>
@@ -45,6 +63,8 @@ Description: Display post page for Mini Insta -->
     <div id="post-update">
         <a href="{% url 'update_post' post.pk %}">Update Post</a>
     </div>
+
+    {% endif %}
 
 </div>
 {% endblock %}

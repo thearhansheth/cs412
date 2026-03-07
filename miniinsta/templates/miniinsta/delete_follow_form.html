@@ -1,0 +1,18 @@
+<!--
+File: templates/miniinsta/delete_follow_form.html 
+Author: Arhan Sheth, 3/6/2026
+Email: aksheth@bu.edu
+Description: Delete follow form page for Mini Insta -->
+
+
+{% extends 'miniinsta/base.html' %}
+
+{% block content %}
+<h1>Unfollow Form</h1>
+<h2>Unfollow {{ profile.username }}?</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Unfollow">
+    <a href="{% url 'show_profile' profile.pk %}"><button type="button">Cancel</button></a>
+</form>
+{% endblock %}

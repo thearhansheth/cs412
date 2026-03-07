@@ -1,0 +1,30 @@
+<!--
+File: templates/miniinsta/create_profile_form.html 
+Author: Arhan Sheth, 3/6/2026
+Email: aksheth@bu.edu
+Description: Form to create profile page for Mini Insta -->
+
+{% extends 'miniinsta/base.html' %}
+
+{% block content %}
+<h1>Create Profile</h1>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <h2>User Account Info</h2>
+    <table>
+        {{ user_form.as_table }}
+    </table>
+    
+    <h2>Profile Info</h2>
+    <table>
+        {{ form.as_table }}
+    </table>
+
+    <input type="submit" name="submit" value="Create Profile">
+    <a href="{% url 'show_all_profiles' %}"><button type="button">Cancel</button></a>
+</form>
+
+
+{% endblock %}

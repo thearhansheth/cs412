@@ -9,14 +9,14 @@ Description: Page to update profile form for Mini Insta -->
 {% block content %}
 <div id="create-post-form">
     <h1>Update Profile</h1>
-    <form action="{% url 'update_profile' profile.pk %}" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'update_profile' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
         </table>
         <br><br>
         <input type="submit" name="submit" value="Update">
-        <a href="{% url 'show_profile' profile.pk %}"><button type="button">Cancel</button></a>
+        <a href="{% url 'show_my_profile' %}"><button type="button">Cancel</button></a>
     </form>
 </div>
 {% endblock %}
