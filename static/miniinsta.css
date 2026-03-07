@@ -332,6 +332,7 @@ form label {
 }
 
 form input[type="text"],
+form input[type="password"],
 form input[type="url"],
 form input[type="file"],
 form textarea,
@@ -542,6 +543,86 @@ nav a:hover {
     color: #0095f6;
 }
 
+/* Nav bar */
+#nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 20px;
+    background-color: white;
+    border-bottom: 1px solid #dbdbdb;
+    font-size: 14px;
+}
+
+#nav a {
+    text-decoration: none;
+    color: #262626;
+    font-weight: 600;
+}
+
+#nav a:hover {
+    color: #0095f6;
+}
+
+#nav form {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    max-width: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+#nav button {
+    background: none;
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #262626;
+}
+
+#nav button:hover {
+    background-color: #fafafa;
+}
+
+#nav .logged-in-as {
+    margin-right: auto;
+    color: #8e8e8e;
+}
+
+/* Like / Unlike buttons */
+.like-btn, .unlike-btn {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.like-btn {
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    color: #262626;
+}
+
+.like-btn:hover {
+    background-color: #fafafa;
+}
+
+.unlike-btn {
+    background-color: #ed4956;
+    color: white;
+}
+
+.unlike-btn:hover {
+    background-color: #c0313d;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     #profile-posts {
@@ -561,4 +642,15 @@ nav a:hover {
     #instagram-container {
         grid-template-columns: 1fr;
     }
+}
+/* Logged out page link */
+.logout-link {
+    color: #0095f6;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.logout-link:hover {
+    color: #1877f2;
 }
