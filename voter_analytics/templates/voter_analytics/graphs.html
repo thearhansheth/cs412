@@ -10,9 +10,10 @@ Description: Graphs page for Voter Analytics -->
 {% block content %}
 <h1>Voter Analytics Dashboard</h1>
 
+<!-- Filter form — identical logic to results.html, targets the graphs URL -->
 <form action="{% url 'graphs' %}" method="GET">
     <table>
-        <!-- party info -->
+        <!-- Party affiliation dropdown -->
         <tr>
             <th>Party affiliation:</th>
             <td>
@@ -25,7 +26,7 @@ Description: Graphs page for Voter Analytics -->
             </td>
         </tr>
 
-        <!-- min DOB -->
+        <!-- Minimum birth year dropdown -->
         <tr>
             <th>Min Birth Year:</th>
             <td>
@@ -38,7 +39,7 @@ Description: Graphs page for Voter Analytics -->
             </td>
         </tr>
 
-        <!-- max DOB -->
+        <!-- Maximum birth year dropdown -->
         <tr>
             <th>Max Birth Year:</th>
             <td>
@@ -51,7 +52,7 @@ Description: Graphs page for Voter Analytics -->
             </td>
         </tr>
 
-        <!-- voter score -->
+        <!-- Voter score -->
         <tr>
             <th>Voter Score:</th>
             <td>
@@ -64,10 +65,11 @@ Description: Graphs page for Voter Analytics -->
             </td>
         </tr>
 
-        <!-- Info for Voted -->
+        <!-- Election participation -->
         <tr>
             <th>Voted in elections:</th>
             <td>
+                <!-- each checkbox stays checked if it was checked before submit -->
                 <input type="checkbox" name="v20" id="v20" {% if get.v20 %}checked{% endif %}>
                 <label for="v20">v20state</label><br>
                 <input type="checkbox" name="v21town" id="v21town" {% if get.v21town %}checked{% endif %}>
@@ -90,19 +92,27 @@ Description: Graphs page for Voter Analytics -->
     </table>
 </form>
 
+<!-- Graph output area — each graph is rendered as an HTML div by Plotly -->
 <div class="container mt-4">
+
+    <!-- Graph 1: histogram of voter birth years -->
     <div class="mt-4">
         <h4>1. Distribution of Voters by Year of Birth</h4>
         {{ graph_birth|safe }}
     </div>
+
+    <!-- Graph 2: pie chart of party affiliation breakdown -->
     <div class="mt-4">
         <h4>2. Distribution of Voters by Party Affiliation</h4>
         {{ graph_party|safe }}
     </div>
+
+    <!-- Graph 3: bar chart of participation count per election -->
     <div class="mt-4">
         <h4>3. Voter Participation Across Elections</h4>
         {{ graph_participation|safe }}
     </div>
+    
 </div>
 
 {% endblock %}

@@ -13,20 +13,20 @@ class Voter(models.Model):
     """Store the data from one voter in the town of Newton, MA
     """
 
-    # identification details
+    # Identification & Address
     voter_id = models.TextField()
     last_name = models.TextField()
     first_name = models.TextField()
-    street_num = models.IntegerField(null=True, blank=True)
+    street_num = models.IntegerField(null=True, blank=True)     # nullable in case of missing data
     street_name = models.TextField()
     apt_num = models.CharField(max_length=10, null=True, blank=True)
     zip = models.CharField(max_length=10)
     dob = models.DateField(null=True, blank=True)
     date_registration = models.DateField(null=True, blank=True)
-    party = models.CharField(max_length=2, null=True, blank=True)
+    party = models.CharField(max_length=2, null=True, blank=True)       # 2-char field, e.g. 'D ', 'R ', 'U '
     precinct = models.CharField(max_length=10, null=True, blank=True)
 
-    # voting info
+    # Election Participation
     v20 = models.BooleanField(null=True, blank=True)
     v21town = models.BooleanField(null=True, blank=True)
     v21primary = models.BooleanField(null=True, blank=True)
@@ -54,6 +54,7 @@ def load_data():
     for line in f:
         fields = line.split(',')
         try:
+            # helper to convert 'TRUE'/'FALSE' strings to Python booleans
             def parse_bool(x):
                 return x.strip().upper() == 'TRUE'
 
@@ -67,7 +68,7 @@ def load_data():
                 zip=fields[6],
                 dob=fields[7],
                 date_registration=fields[8],
-                party=fields[9].strip(),
+                party=fields[9].strip(),        # strip trailing space from 1-char party codes
                 precinct=fields[10],
                 v20=parse_bool(fields[11]),
                 v21town=parse_bool(fields[12]),
@@ -81,6 +82,7 @@ def load_data():
             print(f"Created voter: {voter}")
 
         except:
+            # skip rows with missing or malformed fields
             print(f"Skipped: {fields}")
 
     print(f"Done. Created {Voter.objects.count()} voters.")

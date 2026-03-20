@@ -47,6 +47,7 @@ class VotersListView(ListView):
         if voter_score:
             results = results.filter(voter_score=voter_score)
 
+        # for each election checkbox, filter to voters who participated if checked
         for field in ['v20', 'v21town', 'v21primary', 'v22', 'v23']:
             if self.request.GET.get(field):
                 results = results.filter(**{field: True})
@@ -67,7 +68,7 @@ class VotersListView(ListView):
         context['parties'] = Voter.objects.values_list('party', flat=True).distinct().order_by('party')
         context['years'] = range(1900, 2007)
         context['scores'] = range(0, 6)
-        context['get'] = self.request.GET
+        context['get'] = self.request.GET       # used to re-select form values after submit
 
         return context
       
@@ -90,6 +91,7 @@ class GraphListView(ListView):
 
     def get_queryset(self):
         """Returns filtered queryset based on GET parameters.
+        Mirrors the filtering logic in VotersListView.
         """
         queryset = Voter.objects.all()
 
@@ -107,6 +109,7 @@ class GraphListView(ListView):
         if voter_score:
             queryset = queryset.filter(voter_score=voter_score)
 
+        # only include voters who participated in each checked election
         for field in ['v20', 'v21town', 'v21primary', 'v22', 'v23']:
             if self.request.GET.get(field):
                 queryset = queryset.filter(**{field: True})
@@ -126,7 +129,8 @@ class GraphListView(ListView):
         context['scores'] = range(0, 6)
         context['get'] = self.request.GET
 
-        # graph 1: birth year histogram
+        # Graph 1: Birth Year Histogram
+        # extract birth years from voters who have a valid dob
         years = [v.dob.year for v in voters if v.dob]
         year_counts = Counter(years)
         fig_birth = go.Figure(data=[go.Bar(
@@ -141,7 +145,8 @@ class GraphListView(ListView):
         )
         context['graph_birth'] = plotly.offline.plot(fig_birth, auto_open=False, output_type="div")
 
-        # graph 2: party pie chart
+        # Graph 2: Party Affiliation Pie Chart
+        # use 'Unknown' for any voter with no party on record
         parties = [v.party if v.party else 'Unknown' for v in voters]
         party_counts = Counter(parties)
         fig_party = go.Figure(data=[go.Pie(
@@ -153,7 +158,7 @@ class GraphListView(ListView):
         fig_party.update_layout(title="Distribution of Voters by Party Affiliation")
         context['graph_party'] = plotly.offline.plot(fig_party, auto_open=False, output_type="div")
 
-        # graph 3: election participation histogram
+        # Graph 3: Election Participation Histogram
         election_fields = ['v20', 'v21town', 'v21primary', 'v22', 'v23']
         participation_counts = {field: 0 for field in election_fields}
 

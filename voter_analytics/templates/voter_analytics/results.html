@@ -13,7 +13,7 @@ Description: Results page for Voter Analytics -->
 
 <form action="{% url 'voters' %}" method="GET">
     <table>
-        <!-- party info -->
+        <!-- Party affiliation dropdown -->
         <tr>
             <th>Party affiliation:</th>
             <td>
@@ -26,7 +26,7 @@ Description: Results page for Voter Analytics -->
             </td>
         </tr>
 
-        <!-- min DOB -->
+        <!-- Minimum birth year dropdown -->
         <tr>
             <th>Min Birth Year:</th>
             <td>
@@ -39,7 +39,7 @@ Description: Results page for Voter Analytics -->
             </td>
         </tr>
 
-        <!-- max DOB -->
+        <!-- Maximum birth year dropdown -->
         <tr>
             <th>Max Birth Year:</th>
             <td>
@@ -65,10 +65,11 @@ Description: Results page for Voter Analytics -->
             </td>
         </tr>
 
-        <!-- voted info -->
+        <!-- Election participation -->
         <tr>
             <th>Voted in elections:</th>
             <td>
+                <!-- each checkbox stays checked if it was checked before submit -->
                 <input type="checkbox" name="v20" id="v20" {% if get.v20 %}checked{% endif %}>
                 <label for="v20">v20state</label><br>
                 <input type="checkbox" name="v21town" id="v21town" {% if get.v21town %}checked{% endif %}>
@@ -127,6 +128,7 @@ Description: Results page for Voter Analytics -->
     
             {% for r in results %}
             <tr>
+                <!-- voter name links to their detail page -->
                 <td><a href="{% url 'voter' r.pk %}">{{ r.first_name }} {{ r.last_name }}</a></td>
                 <td>{{ r.street_num }} {{ r.street_name }}, {{ r.zip }}</td>
                 <td>{{ r.dob }}</td>

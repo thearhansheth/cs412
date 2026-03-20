@@ -10,6 +10,7 @@ Description: Voter page for Voter Analytics -->
 
 <h1>Voter information for {{ voter.first_name }} {{ voter.last_name }}</h1>
 
+<!-- all voter fields displayed in a two-column table -->
 <table>
     <tr>
         <th>Birth Date</th>
@@ -27,6 +28,8 @@ Description: Voter page for Voter Analytics -->
         <th>Voter Score</th>
         <td>{{ voter.voter_score }}</td>
     </tr>
+
+    <!-- election participation — True/False for each of the 5 elections -->
     <tr>
         <th>Voted in v20state</th>
         <td>{{ voter.v20 }}</td>
@@ -53,6 +56,7 @@ Description: Voter page for Voter Analytics -->
     </tr>
 </table>
 
+<!-- opens Google Maps with the voter's address pre-filled — useful for campaign volunteers -->
 <a href="https://www.google.com/maps/search/?api=1&query={{ voter.street_num }}+{{ voter.street_name }}+{{ voter.zip }}" 
    target="_blank">View on Google Maps</a>
 
