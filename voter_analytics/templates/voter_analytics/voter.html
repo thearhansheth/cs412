@@ -1,0 +1,61 @@
+<!--
+File: templates/voter_analytics/voter.html 
+Author: Arhan Sheth, 3/20/2026
+Email: aksheth@bu.edu
+Description: Voter page for Voter Analytics -->
+
+
+{% extends 'voter_analytics/base.html' %}
+{% block content %}
+
+<h1>Voter information for {{ voter.first_name }} {{ voter.last_name }}</h1>
+
+<table>
+    <tr>
+        <th>Birth Date</th>
+        <td>{{ voter.dob }}</td>
+    </tr>
+    <tr>
+        <th>Registration Date</th>
+        <td>{{ voter.date_registration }}</td>
+    </tr>
+    <tr>
+        <th>Party</th>
+        <td>{{ voter.party }}</td>
+    </tr>
+    <tr>
+        <th>Voter Score</th>
+        <td>{{ voter.voter_score }}</td>
+    </tr>
+    <tr>
+        <th>Voted in v20state</th>
+        <td>{{ voter.v20 }}</td>
+    </tr>
+    <tr>
+        <th>Voted in v21town</th>
+        <td>{{ voter.v21town }}</td>
+    </tr>
+    <tr>
+        <th>Voted in v21primary</th>
+        <td>{{ voter.v21primary }}</td>
+    </tr>
+    <tr>
+        <th>Voted in v22general</th>
+        <td>{{ voter.v22 }}</td>
+    </tr>
+    <tr>
+        <th>Voted in v23town</th>
+        <td>{{ voter.v23 }}</td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td>{{ voter.street_num }} {{ voter.street_name }}, {{ voter.zip }}</td>
+    </tr>
+</table>
+
+<a href="https://www.google.com/maps/search/?api=1&query={{ voter.street_num }}+{{ voter.street_name }}+{{ voter.zip }}" 
+   target="_blank">View on Google Maps</a>
+
+<a href="{% url 'voters' %}">Back to Voter List</a>
+
+{% endblock %}
