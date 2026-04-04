@@ -1,0 +1,17 @@
+<!--
+File: templates/dadjokes/jokes.html 
+Author: Arhan Sheth, 4/03/2026
+Email: aksheth@bu.edu
+Description: Jokes page for Dad Jokes -->
+
+{% extends 'dadjokes/base.html' %}
+{% block content %}
+<h1>All Dad Jokes</h1>
+{% for joke in jokes %}
+<div>
+    <p><a href="{% url 'joke_detail' joke.pk %}"><strong>{{ joke.text }}</strong></a></p>
+    <p>-- {{ joke.name }} | {{ joke.timestamp|date:"M d, Y" }}</p>
+    <hr>
+</div>
+{% endfor %}
+{% endblock %}

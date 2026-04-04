@@ -1,0 +1,15 @@
+<!--
+File: templates/dadjokes/random.html 
+Author: Arhan Sheth, 4/03/2026
+Email: aksheth@bu.edu
+Description: Random joke and picture display page for Dad Jokes -->
+
+{% extends 'dadjokes/base.html' %}
+{% block content %}
+<h1>Dad Joke of the Day</h1>
+<p><strong>{{ joke.text }}</strong></p>
+<p>-- {{ joke.name }}</p>
+<hr>
+<img src="{{ picture.picture }}" alt="funny picture">
+<p>-- {{ picture.name }}</p>
+{% endblock %}

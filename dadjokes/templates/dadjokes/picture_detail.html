@@ -1,0 +1,12 @@
+<!--
+File: templates/dadjokes/picture_detail.html 
+Author: Arhan Sheth, 4/03/2026
+Email: aksheth@bu.edu
+Description: Single picture page for Dad Jokes -->
+
+{% extends 'dadjokes/base.html' %}
+{% block content %}
+<h1>Picture #{{ picture.pk }}</h1>
+<img src="{{ picture.picture }}" alt="funny picture">
+<p>-- {{ picture.name }} | {{ picture.timestamp|date:"M d, Y" }}</p>
+{% endblock %}

@@ -1,0 +1,26 @@
+<!--
+File: templates/dadjokes/base.html 
+Author: Arhan Sheth, 4/03/2026
+Email: aksheth@bu.edu
+Description: Base page for Dad Jokes -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dad Jokes</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        nav a { margin-right: 15px; }
+        img { max-width: 400px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'random' %}">Home</a>
+        <a href="{% url 'jokes' %}">All Jokes</a>
+        <a href="{% url 'pictures' %}">All Pictures</a>
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>

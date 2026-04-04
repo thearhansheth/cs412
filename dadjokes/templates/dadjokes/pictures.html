@@ -1,0 +1,19 @@
+<!--
+File: templates/dadjokes/pictures.html 
+Author: Arhan Sheth, 4/03/2026
+Email: aksheth@bu.edu
+Description: Pictures page for Dad Jokes -->
+
+{% extends 'dadjokes/base.html' %}
+{% block content %}
+<h1>All Pictures</h1>
+{% for picture in pictures %}
+<div>
+    <a href="{% url 'picture_detail' picture.pk %}">
+        <img src="{{ picture.picture }}" alt="funny picture">
+    </a>
+    <p>-- {{ picture.name }} | {{ picture.timestamp|date:"M d, Y" }}</p>
+    <hr>
+</div>
+{% endfor %}
+{% endblock %}
