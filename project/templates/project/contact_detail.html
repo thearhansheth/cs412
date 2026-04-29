@@ -1,0 +1,58 @@
+<!--
+File: project/templates/project/contact_detail.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: Detail page for a single professional contact -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}
+    {{ contact.first_name }} {{ contact.last_name }} | Job Application Tracker
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{{ contact.first_name }} {{ contact.last_name }}</h2>
+    <div>
+        <a href="{% url 'contact_update' contact.pk %}" class="btn">Edit</a>
+        <a href="{% url 'contact_delete' contact.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+
+<div class="card">
+    <!-- two-column grid showing all contact fields -->
+    <div class="detail-grid">
+        <div class="detail-field">
+            <div class="label">Company</div>
+            <div class="value">
+                <a href="{% url 'company_detail' contact.company.pk %}">
+                    {{ contact.company.name }}
+                </a>
+            </div>
+        </div>
+        <div class="detail-field">
+            <div class="label">Role</div>
+            <div class="value">{{ contact.role|default:"—" }}</div>
+        </div>
+        <div class="detail-field">
+            <div class="label">Email</div>
+            <div class="value">
+                {% if contact.email %}
+                    <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+                {% else %}—{% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if contact.notes %}
+        <div class="detail-field">
+            <div class="label">Notes</div>
+            <div class="value">{{ contact.notes|linebreaks }}</div>
+        </div>
+    {% endif %}
+</div>
+
+<div style="margin-top: 1.5rem;">
+    <a href="{% url 'contact_list' %}" class="btn btn-secondary">← Back to Contacts</a>
+</div>
+{% endblock %}

@@ -1,0 +1,185 @@
+<!--
+File: project/templates/project/dashboard.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: Dashboard page with analytics, plus a toggle between a Kanban
+pipeline view and a Sankey flow diagram visualization (using Plotly.js) -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}Dashboard | Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>My Dashboard</h2>
+    <a href="{% url 'application_create' %}" class="btn btn-success">+ New Application</a>
+</div>
+
+<!-- summary statistics across all of the user's data -->
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <div class="stat-number">{{ total_applications }}</div>
+        <div class="stat-label">My Applications</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ total_companies }}</div>
+        <div class="stat-label">Companies Tracked</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ total_postings }}</div>
+        <div class="stat-label">Job Postings</div>
+    </div>
+</div>
+
+<!-- conversion rate analytics computed via Django ORM aggregation -->
+<div class="dashboard-stats">
+    <div class="stat-card">
+        <div class="stat-number">{{ response_rate }}%</div>
+        <div class="stat-label">Response Rate</div>
+        <div class="stat-detail">{{ n_responded }} of {{ n_submitted }} submitted</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ interview_rate }}%</div>
+        <div class="stat-label">Interview Rate</div>
+        <div class="stat-detail">{{ n_interviewed }} of {{ n_submitted }} submitted</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ offer_rate }}%</div>
+        <div class="stat-label">Offer Rate</div>
+        <div class="stat-detail">{{ n_offers }} of {{ n_submitted }} submitted</div>
+    </div>
+</div>
+
+<!-- toggle buttons to switch between visualizations -->
+<div class="view-toggle">
+    <button id="btn-kanban" class="toggle-btn active" onclick="showView('kanban')">
+        Pipeline View
+    </button>
+    <button id="btn-sankey" class="toggle-btn" onclick="showView('sankey')">
+        Flow Diagram
+    </button>
+</div>
+
+<!-- KANBAN VIEW: shown by default -->
+<div id="view-kanban">
+    <div class="pipeline">
+        {% for stage in pipeline %}
+            <div class="pipeline-stage">
+                <h3>
+                    {{ stage.label }}
+                    <span class="stage-count">{{ stage.count }}</span>
+                </h3>
+
+                <!-- iterate through applications currently at this stage -->
+                {% for application in stage.applications %}
+                    <div class="pipeline-card">
+                        <a href="{% url 'application_detail' application.pk %}">
+                            {{ application.job_posting.title }}
+                        </a>
+                        <div class="company-name">
+                            {{ application.job_posting.company.name }}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p style="color: #bdc3c7; font-size: 0.85rem; font-style: italic;">
+                        No applications
+                    </p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- SANKEY VIEW: hidden until toggled, then lazy-initialized via Plotly -->
+<div id="view-sankey" style="display: none;">
+    <div class="card">
+        <!-- header: description on left, rejected count badge on right -->
+        <div class="sankey-header">
+            <p style="color: #7f8c8d; font-size: 0.9rem; margin: 0; flex: 1;">
+                Funnel showing how your applications progress through the
+                hiring pipeline. Each ribbon's width corresponds to the
+                number of applications that reached that stage.
+            </p>
+            <div>
+                <span class="badge badge-rejected" style="font-size: 0.95rem; padding: 0.35rem 1rem;">
+                    {{ n_rejected }} Rejected
+                </span>
+            </div>
+        </div>
+        <div id="sankey-chart" style="height: 500px; width: 100%;"></div>
+    </div>
+</div>
+
+<!-- Chart made using AI -->
+<!-- Plotly.js for the Sankey diagram, loaded from CDN -->
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+ 
+<script>
+    // node colors, one per stage. order matches the sankey_labels list from the view
+    const nodeColors = ["#3498db", "#9b59b6", "#f39c12", "#e67e22", "#27ae60"];
+    const sources = {{ sankey_sources|safe }};
+    const targets = {{ sankey_targets|safe }};
+    const values = {{ sankey_values|safe }};
+ 
+    // build link colors: each link inherits a semi-transparent version of its
+    // source node's color. without this, Plotly defaults to a barely-visible
+    // gray that makes ribbons disappear against white backgrounds.
+    const linkColors = sources.map(srcIdx => {
+        const hex = nodeColors[srcIdx];
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, 0.45)`;
+    });
+ 
+    // sankey chart configuration, populated from the Django context
+    const sankeyData = {
+        type: "sankey",
+        orientation: "h",
+        arrangement: "fixed",
+        node: {
+            pad: 30,
+            thickness: 25,
+            line: { color: "#34495e", width: 0.5 },
+            label: {{ sankey_labels|safe }},
+            color: nodeColors
+        },
+        link: {
+            source: sources,
+            target: targets,
+            value: values,
+            color: linkColors
+        }
+    };
+ 
+    const sankeyLayout = {
+        font: { size: 14, family: "system-ui, -apple-system, sans-serif" },
+        margin: { t: 30, b: 30, l: 30, r: 60 },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        plot_bgcolor: "rgba(0,0,0,0)"
+    };
+ 
+    // lazy initialization: Plotly does not render correctly inside hidden
+    // containers, so we defer init until the user first opens the sankey view
+    let sankeyInitialized = false;
+    function initSankey() {
+        if (sankeyInitialized) return;
+        Plotly.newPlot('sankey-chart', [sankeyData], sankeyLayout, {responsive: true});
+        sankeyInitialized = true;
+    }
+ 
+    // toggle handler: switches which view is visible and updates active button
+    function showView(view) {
+        document.getElementById('view-kanban').style.display = (view === 'kanban') ? 'block' : 'none';
+        document.getElementById('view-sankey').style.display = (view === 'sankey') ? 'block' : 'none';
+        document.getElementById('btn-kanban').classList.toggle('active', view === 'kanban');
+        document.getElementById('btn-sankey').classList.toggle('active', view === 'sankey');
+ 
+        // initialize sankey on first display, and resize on each subsequent show
+        if (view === 'sankey') {
+            initSankey();
+            Plotly.Plots.resize('sankey-chart');
+        }
+    }
+</script>
+{% endblock %}

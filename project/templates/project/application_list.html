@@ -1,0 +1,106 @@
+<!--
+File: project/templates/project/application_list.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: List page for the user's applications with status/company filters.
+This page implements the search/filtering "report" feature of the project. -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}My Applications | Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>My Applications</h2>
+    <a href="{% url 'application_create' %}" class="btn btn-success">+ New Application</a>
+</div>
+
+<!-- filter bar: GET form with status and company dropdowns.
+     submitting this form re-renders the page with a filtered queryset. -->
+<form method="GET" class="filter-bar">
+    <div class="form-group">
+        <label for="status">Filter by Status:</label>
+        <select name="status" id="status">
+            <option value="">All Statuses</option>
+            <!-- iterate through all status choices, marking the current one selected -->
+            {% for code, label in status_choices %}
+                <option value="{{ code }}" {% if current_status == code %}selected{% endif %}>
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="company">Filter by Company:</label>
+        <select name="company" id="company">
+            <option value="">All Companies</option>
+            <!-- iterate through all companies, marking the current one selected -->
+            {% for company in companies %}
+                <option value="{{ company.pk }}" {% if current_company == company.pk|stringformat:"s" %}selected{% endif %}>
+                    {{ company.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Apply Filters">
+    </div>
+
+    <div class="form-group">
+        <!-- "clear" link resets back to the unfiltered list view -->
+        <a href="{% url 'application_list' %}" class="btn btn-secondary">Clear</a>
+    </div>
+</form>
+
+<!-- if filters returned at least one row, show the results table -->
+{% if applications %}
+    <p style="margin-bottom: 1rem; color: #7f8c8d;">
+        Showing {{ applications|length }} application{{ applications|length|pluralize }}
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Date Applied</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+                <tr>
+                    <td>
+                        <a href="{% url 'application_detail' application.pk %}">
+                            {{ application.job_posting.title }}
+                        </a>
+                    </td>
+                    <td>{{ application.job_posting.company.name }}</td>
+                    <td>
+                        <!-- status displayed as a colored badge -->
+                        <span class="badge badge-{{ application.status }}">
+                            {{ application.get_status_display }}
+                        </span>
+                    </td>
+                    <td>{{ application.date_applied|default:"—" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <!-- empty state: distinguish between "no applications at all" vs "filters too narrow" -->
+    <div class="card">
+        {% if current_status or current_company %}
+            <p>No applications match your filters.
+                <a href="{% url 'application_list' %}">Clear filters</a> to see all.
+            </p>
+        {% else %}
+            <p>No applications yet.
+                <a href="{% url 'application_create' %}">Add your first one</a>.
+            </p>
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}

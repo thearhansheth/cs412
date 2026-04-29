@@ -1,0 +1,46 @@
+<!--
+File: project/templates/project/company_list.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: List page showing all companies in the database -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}Companies | Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Companies</h2>
+    <a href="{% url 'company_create' %}" class="btn btn-success">+ New Company</a>
+</div>
+
+<!-- if no companies, show a friendly empty state instead of an empty table -->
+{% if companies %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Industry</th>
+                <th>Location</th>
+                <th>Postings</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for company in companies %}
+                <tr>
+                    <td>
+                        <a href="{% url 'company_detail' company.pk %}">{{ company.name }}</a>
+                    </td>
+                    <td>{{ company.industry }}</td>
+                    <td>{{ company.location|default:"—" }}</td>
+                    <td>{{ company.job_postings.count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="card">
+        <p>No companies yet. <a href="{% url 'company_create' %}">Add your first one</a>.</p>
+    </div>
+{% endif %}
+{% endblock %}

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "dadjokes", #assignment 9
     "rest_framework",
     "rest_framework.authtoken",
+    "project", #final project
 ]
 
 MIDDLEWARE = [
@@ -155,3 +156,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         ],
 }
+
+LOGIN_URL = '/project/login/'
+LOGIN_REDIRECT_URL = '/project/'

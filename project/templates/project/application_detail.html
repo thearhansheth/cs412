@@ -1,0 +1,90 @@
+<!--
+File: project/templates/project/application_detail.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: Detail page for a single application owned by the current user -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}
+    {{ application.job_posting.title }} | Job Application Tracker
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h2>{{ application.job_posting.title }}</h2>
+        <p style="color: #7f8c8d; margin-top: 0.3rem;">
+            at {{ application.job_posting.company.name }}
+        </p>
+    </div>
+    <div>
+        <a href="{% url 'application_update' application.pk %}" class="btn">Edit</a>
+        <a href="{% url 'application_delete' application.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+
+<div class="card">
+    <!-- two-column grid showing core application fields -->
+    <div class="detail-grid">
+        <div class="detail-field">
+            <div class="label">Status</div>
+            <div class="value">
+                <span class="badge badge-{{ application.status }}">
+                    {{ application.get_status_display }}
+                </span>
+            </div>
+        </div>
+        <div class="detail-field">
+            <div class="label">Date Applied</div>
+            <div class="value">
+                {{ application.date_applied|default:"—" }}
+                {% if application.days_since_applied is not None %}
+                    <span class="days-applied">
+                        {{ application.days_since_applied }} day{{ application.days_since_applied|pluralize }} ago
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="detail-field">
+            <div class="label">Company</div>
+            <div class="value">
+                <a href="{% url 'company_detail' application.job_posting.company.pk %}">
+                    {{ application.job_posting.company.name }}
+                </a>
+            </div>
+        </div>
+        <div class="detail-field">
+            <div class="label">Job Posting</div>
+            <div class="value">
+                <a href="{% url 'job_posting_detail' application.job_posting.pk %}">
+                    View Posting Details
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- key feature: link to the original job posting URL for interview prep -->
+    {% if application.job_posting.url %}
+        <div class="detail-field" style="margin-top: 1rem;">
+            <div class="label">Original Job Posting URL</div>
+            <div class="value">
+                <a href="{{ application.job_posting.url }}" target="_blank">
+                    {{ application.job_posting.url }}
+                </a>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if application.notes %}
+        <div class="detail-field" style="margin-top: 1rem;">
+            <div class="label">My Notes</div>
+            <div class="value">{{ application.notes|linebreaks }}</div>
+        </div>
+    {% endif %}
+</div>
+
+<div style="margin-top: 1.5rem;">
+    <a href="{% url 'application_list' %}" class="btn btn-secondary">← Back to Applications</a>
+</div>
+{% endblock %}

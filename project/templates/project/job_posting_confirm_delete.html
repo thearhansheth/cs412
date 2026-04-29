@@ -1,0 +1,35 @@
+<!--
+File: project/templates/project/job_posting_confirm_delete.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: Confirmation page before deleting a JobPosting record -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}Delete {{ job_posting.title }} | Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Delete Job Posting</h2>
+</div>
+
+<div class="card" style="max-width: 600px;">
+    <p style="margin-bottom: 1rem;">
+        Are you sure you want to delete
+        <strong>{{ job_posting.title }} at {{ job_posting.company.name }}</strong>?
+    </p>
+
+    <!-- warn the user about cascade deletion of related applications -->
+    <p style="color: #e74c3c; margin-bottom: 1.5rem;">
+        This will also delete all related applications.
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-actions">
+            <input type="submit" value="Delete" style="background-color: #e74c3c; color: white; border: none; padding: 0.6rem 1.2rem; cursor: pointer; border-radius: 4px;">
+            <a href="{% url 'job_posting_detail' job_posting.pk %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

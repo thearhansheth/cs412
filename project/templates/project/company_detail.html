@@ -1,0 +1,112 @@
+<!--
+File: project/templates/project/company_detail.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: Detail page for a single company, including its postings and contacts -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}{{ company.name }} | Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{{ company.name }}</h2>
+    <div>
+        <a href="{% url 'company_update' company.pk %}" class="btn">Edit</a>
+        <a href="{% url 'company_delete' company.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+
+<div class="card">
+    <!-- two-column grid showing all company fields -->
+    <div class="detail-grid">
+        <div class="detail-field">
+            <div class="label">Industry</div>
+            <div class="value">{{ company.industry }}</div>
+        </div>
+        <div class="detail-field">
+            <div class="label">Location</div>
+            <div class="value">{{ company.location|default:"—" }}</div>
+        </div>
+        <div class="detail-field">
+            <div class="label">Website</div>
+            <div class="value">
+                {% if company.website %}
+                    <a href="{{ company.website }}" target="_blank">{{ company.website }}</a>
+                {% else %}—{% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if company.notes %}
+        <div class="detail-field">
+            <div class="label">Notes</div>
+            <div class="value">{{ company.notes|linebreaks }}</div>
+        </div>
+    {% endif %}
+</div>
+
+<!-- show all job postings related to this company via FK reverse lookup -->
+<h3 style="margin: 1.5rem 0 1rem 0;">Job Postings at {{ company.name }}</h3>
+{% if company.job_postings.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Date Posted</th>
+                <th>Applications</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for posting in company.job_postings.all %}
+                <tr>
+                    <td>
+                        <a href="{% url 'job_posting_detail' posting.pk %}">{{ posting.title }}</a>
+                    </td>
+                    <td>{{ posting.date_posted|default:"—" }}</td>
+                    <td>{{ posting.applications.count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="card">
+        <p>No job postings yet for this company.</p>
+    </div>
+{% endif %}
+
+<!-- show all contacts at this company via FK reverse lookup -->
+<h3 style="margin: 1.5rem 0 1rem 0;">Contacts at {{ company.name }}</h3>
+{% if company.contacts.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in company.contacts.all %}
+                <tr>
+                    <td>
+                        <a href="{% url 'contact_detail' contact.pk %}">
+                            {{ contact.first_name }} {{ contact.last_name }}
+                        </a>
+                    </td>
+                    <td>{{ contact.role|default:"—" }}</td>
+                    <td>{{ contact.email|default:"—" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="card">
+        <p>No contacts yet for this company.</p>
+    </div>
+{% endif %}
+
+<div style="margin-top: 1.5rem;">
+    <a href="{% url 'company_list' %}" class="btn btn-secondary">← Back to Companies</a>
+</div>
+{% endblock %}

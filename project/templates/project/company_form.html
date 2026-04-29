@@ -1,0 +1,47 @@
+<!--
+File: project/templates/project/company_form.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: Shared form template for creating and updating Company records -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}
+    {% if object %}Edit {{ object.name }}{% else %}New Company{% endif %}
+    | Job Application Tracker
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <!-- header changes depending on whether we're creating or editing -->
+    <h2>
+        {% if object %}Edit Company{% else %}New Company{% endif %}
+    </h2>
+</div>
+
+<div class="card" style="max-width: 700px;">
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- iterate through all form fields, rendering each with its label -->
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                {{ field }}
+                {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            <input type="submit" value="Save">
+            <a href="{% url 'company_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

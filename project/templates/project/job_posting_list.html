@@ -1,0 +1,50 @@
+<!--
+File: project/templates/project/job_posting_list.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: List page showing all job postings in the database -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}Job Postings | Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Job Postings</h2>
+    <a href="{% url 'job_posting_create' %}" class="btn btn-success">+ New Job Posting</a>
+</div>
+
+<!-- if no postings, show a friendly empty state instead of an empty table -->
+{% if job_postings %}
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Date Posted</th>
+                <th>Applications</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for posting in job_postings %}
+                <tr>
+                    <td>
+                        <a href="{% url 'job_posting_detail' posting.pk %}">{{ posting.title }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'company_detail' posting.company.pk %}">
+                            {{ posting.company.name }}
+                        </a>
+                    </td>
+                    <td>{{ posting.date_posted|default:"—" }}</td>
+                    <td>{{ posting.applications.count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="card">
+        <p>No job postings yet. <a href="{% url 'job_posting_create' %}">Add your first one</a>.</p>
+    </div>
+{% endif %}
+{% endblock %}

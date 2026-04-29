@@ -1,0 +1,579 @@
+/*
+File: cs412/static/project.css
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: Stylesheet for the Job Application Tracker. 
+
+Note: CSS produced using AI tools
+*/
+
+/* import a refined sans-serif font for better typographic personality */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* base reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* page body: warm off-white with a subtle dot grid pattern.
+   the dot grid adds gentle texture without being distracting */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #1e293b;
+    line-height: 1.6;
+    background-color: #f6f7fb;
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(99, 102, 241, 0.08) 1px, transparent 0);
+    background-size: 24px 24px;
+    min-height: 100vh;
+}
+
+/* page H1: deep gradient header with subtle bottom accent stripe */
+h1 {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
+    color: white;
+    padding: 1.4rem 2.5rem;
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    border-bottom: 3px solid #6366f1;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+}
+
+/* navigation bar: clean dark with subtle hover transitions */
+#nav {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    padding: 0.9rem 2.5rem;
+    display: flex;
+    gap: 1.8rem;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+#nav a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.4rem 0.2rem;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+#nav a:hover {
+    color: #818cf8;
+    border-bottom-color: #6366f1;
+}
+#nav .logged-in-as {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-left: auto;
+}
+#nav .logged-in-as strong { color: #e2e8f0; font-weight: 600; }
+#nav form { display: inline; margin: 0; }
+#nav form button {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    padding: 0.35rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.15s ease;
+}
+#nav form button:hover {
+    background-color: #ef4444;
+    color: white;
+    border-color: #ef4444;
+}
+
+/* main content container */
+#content-container {
+    max-width: 1280px;
+    margin: 2.5rem auto;
+    padding: 0 2.5rem;
+}
+
+/* page header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.8rem;
+}
+.page-header h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+}
+
+/* buttons: depth via gradient + shadow, satisfying lift on hover */
+.btn {
+    display: inline-block;
+    padding: 0.65rem 1.3rem;
+    background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(79, 70, 229, 0.2);
+    transition: all 0.15s ease;
+}
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3), 0 0 0 1px rgba(79, 70, 229, 0.3);
+}
+.btn:active { transform: translateY(0); }
+
+.btn-danger {
+    background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(220, 38, 38, 0.2);
+}
+.btn-danger:hover {
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3), 0 0 0 1px rgba(220, 38, 38, 0.3);
+}
+
+.btn-secondary {
+    background: white;
+    color: #475569;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(148, 163, 184, 0.3);
+}
+.btn-secondary:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(148, 163, 184, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(5, 150, 105, 0.2);
+}
+.btn-success:hover {
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3), 0 0 0 1px rgba(5, 150, 105, 0.3);
+}
+
+/* card: subtle border + soft shadow, lifts on hover for tactility */
+.card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.8rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(148, 163, 184, 0.1);
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+}
+
+/* table: refined header gradient, hover row, subtle striping via borders */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(148, 163, 184, 0.1);
+}
+th, td {
+    padding: 1rem 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid #f1f5f9;
+}
+th {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+tbody tr {
+    transition: background-color 0.12s ease;
+}
+tbody tr:hover {
+    background-color: #f8fafc;
+}
+tbody tr:last-child td {
+    border-bottom: none;
+}
+td a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.12s ease;
+}
+td a:hover {
+    color: #4338ca;
+    text-decoration: underline;
+}
+
+/* forms: refined inputs with smooth focus states */
+form .form-group { margin-bottom: 1.3rem; }
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #334155;
+    font-size: 0.9rem;
+}
+form input, form textarea, form select {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #1e293b;
+    background-color: white;
+    transition: all 0.15s ease;
+}
+form input:focus, form textarea:focus, form select:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+form input[type="submit"] {
+    width: auto;
+    background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1);
+    transition: all 0.15s ease;
+}
+form input[type="submit"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+form textarea { min-height: 90px; resize: vertical; }
+.form-actions {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.8rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f1f5f9;
+}
+.helptext, .errorlist {
+    font-size: 0.85rem;
+    color: #ef4444;
+    margin-top: 0.4rem;
+    list-style: none;
+}
+.helptext { color: #94a3b8; }
+
+/* status badges: subtle gradient + soft shadow for tactility */
+.badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.1);
+}
+.badge-wishlist { background: linear-gradient(135deg, #94a3b8, #64748b); }
+.badge-applied { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+.badge-phone_screen { background: linear-gradient(135deg, #c084fc, #a855f7); }
+.badge-interview { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+.badge-final_round { background: linear-gradient(135deg, #fb923c, #ea580c); }
+.badge-offer { background: linear-gradient(135deg, #34d399, #10b981); }
+.badge-rejected { background: linear-gradient(135deg, #f87171, #ef4444); }
+
+/* auth (login/signup) form layout */
+.auth-container {
+    max-width: 420px;
+    margin: 5rem auto;
+    background-color: white;
+    padding: 2.8rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(148, 163, 184, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+.auth-container::before {
+    /* decorative gradient stripe at top of auth card */
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+}
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 1.8rem;
+    color: #0f172a;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+.auth-container .auth-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #64748b;
+}
+.auth-container .auth-link a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 600;
+}
+.auth-container .auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* dashboard stat cards: gradient numbers + colored top accent */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+.stat-card {
+    background-color: white;
+    padding: 1.8rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(148, 163, 184, 0.1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+.stat-card::before {
+    /* colored top accent stripe, subtle visual hook */
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+}
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.12), 0 0 0 1px rgba(148, 163, 184, 0.15);
+}
+.stat-card .stat-number {
+    font-size: 2.6rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+.stat-card .stat-label {
+    font-size: 0.78rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    margin-top: 0.3rem;
+}
+.stat-detail {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 0.4rem;
+    font-weight: 500;
+}
+
+/* kanban pipeline */
+.pipeline {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.8rem;
+    overflow-x: auto;
+}
+.pipeline-stage {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
+    min-height: 220px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(148, 163, 184, 0.1);
+    transition: all 0.2s ease;
+}
+.pipeline-stage:hover {
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(148, 163, 184, 0.15);
+}
+.pipeline-stage h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #1e293b;
+}
+.pipeline-stage .stage-count {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: white;
+    border-radius: 999px;
+    padding: 0.15rem 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    box-shadow: 0 1px 2px rgba(79, 70, 229, 0.3);
+}
+.pipeline-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    padding: 0.8rem;
+    border-radius: 7px;
+    margin-bottom: 0.7rem;
+    font-size: 0.85rem;
+    border-left: 3px solid #6366f1;
+    transition: all 0.15s ease;
+}
+.pipeline-card:hover {
+    transform: translateX(2px);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+    border-left-color: #4f46e5;
+}
+.pipeline-card a {
+    color: #1e293b;
+    text-decoration: none;
+    font-weight: 600;
+}
+.pipeline-card a:hover { color: #4f46e5; }
+.pipeline-card .company-name {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+/* toggle button group between Pipeline View and Flow Diagram */
+.view-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.5rem;
+    background-color: white;
+    padding: 0.35rem;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(148, 163, 184, 0.1);
+    width: fit-content;
+}
+.toggle-btn {
+    padding: 0.6rem 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.92rem;
+    color: #64748b;
+    border-radius: 7px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.18s ease;
+}
+.toggle-btn.active {
+    background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+    color: white;
+    box-shadow: 0 1px 3px rgba(79, 70, 229, 0.4);
+}
+.toggle-btn:hover:not(.active) {
+    background-color: #f1f5f9;
+    color: #1e293b;
+}
+
+/* sankey chart card header: description + rejected count badge */
+.sankey-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* filter bar for application list */
+.filter-bar {
+    background-color: white;
+    padding: 1.2rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(148, 163, 184, 0.1);
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    flex-wrap: wrap;
+}
+.filter-bar .form-group { margin: 0; flex: 1; min-width: 160px; }
+.filter-bar select { width: 100%; }
+
+/* detail page layout */
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+.detail-field { padding: 0.5rem 0; }
+.detail-field .label {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+.detail-field .value {
+    font-size: 1.05rem;
+    color: #0f172a;
+    margin-top: 0.3rem;
+    font-weight: 500;
+}
+.detail-field .value a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 600;
+}
+.detail-field .value a:hover { text-decoration: underline; }
+
+/* "days since applied" badge on application detail */
+.days-applied {
+    display: inline-block;
+    margin-left: 0.7rem;
+    padding: 0.2rem 0.7rem;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    color: #4338ca;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+/* footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-top: 4rem;
+    border-top: 1px solid #e2e8f0;
+}
+footer a { color: #4f46e5; text-decoration: none; font-weight: 500; }
+
+/* page-load fade-in animation for content area, makes nav feel snappy */
+#content-container {
+    animation: fadeInUp 0.4s ease-out;
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* responsive: collapse pipeline on smaller screens */
+@media (max-width: 1100px) {
+    .pipeline { grid-template-columns: repeat(2, 1fr); }
+    .dashboard-stats { grid-template-columns: 1fr; }
+    .detail-grid { grid-template-columns: 1fr; }
+    #content-container { padding: 0 1.5rem; }
+}

@@ -1,0 +1,89 @@
+<!--
+File: project/templates/project/job_posting_detail.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: Detail page for a single job posting, with link to the original URL -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}{{ job_posting.title }} | Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{{ job_posting.title }}</h2>
+    <div>
+        <a href="{% url 'job_posting_update' job_posting.pk %}" class="btn">Edit</a>
+        <a href="{% url 'job_posting_delete' job_posting.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+
+<div class="card">
+    <!-- two-column grid showing core posting fields -->
+    <div class="detail-grid">
+        <div class="detail-field">
+            <div class="label">Company</div>
+            <div class="value">
+                <a href="{% url 'company_detail' job_posting.company.pk %}">
+                    {{ job_posting.company.name }}
+                </a>
+            </div>
+        </div>
+        <div class="detail-field">
+            <div class="label">Date Posted</div>
+            <div class="value">{{ job_posting.date_posted|default:"—" }}</div>
+        </div>
+    </div>
+
+    <!-- the original posting URL is the key feature for revisiting during interviews -->
+    {% if job_posting.url %}
+        <div class="detail-field">
+            <div class="label">Original Job Posting URL</div>
+            <div class="value">
+                <a href="{{ job_posting.url }}" target="_blank">{{ job_posting.url }}</a>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if job_posting.description %}
+        <div class="detail-field" style="margin-top: 1rem;">
+            <div class="label">Description</div>
+            <div class="value">{{ job_posting.description|linebreaks }}</div>
+        </div>
+    {% endif %}
+</div>
+
+<!-- show all applications submitted to this posting via FK reverse lookup -->
+<h3 style="margin: 1.5rem 0 1rem 0;">Applications for this Posting</h3>
+{% if job_posting.applications.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Applicant</th>
+                <th>Status</th>
+                <th>Date Applied</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in job_posting.applications.all %}
+                <tr>
+                    <td>{{ application.user.username }}</td>
+                    <td>
+                        <span class="badge badge-{{ application.status }}">
+                            {{ application.get_status_display }}
+                        </span>
+                    </td>
+                    <td>{{ application.date_applied|default:"—" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="card">
+        <p>No applications yet for this posting.</p>
+    </div>
+{% endif %}
+
+<div style="margin-top: 1.5rem;">
+    <a href="{% url 'job_posting_list' %}" class="btn btn-secondary">← Back to Job Postings</a>
+</div>
+{% endblock %}

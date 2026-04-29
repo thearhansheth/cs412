@@ -1,0 +1,43 @@
+<!--
+File: project/templates/project/signup.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: Signup page for the Job Application Tracker -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}Sign Up | Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <h2>Create Account</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- iterate through all UserCreationForm fields (username + 2 passwords) -->
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="helptext">{{ field.help_text|safe }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <input type="submit" value="Sign Up">
+    </form>
+
+    <p class="auth-link">
+        Already have an account? <a href="{% url 'login' %}">Login</a>
+    </p>
+</div>
+{% endblock %}

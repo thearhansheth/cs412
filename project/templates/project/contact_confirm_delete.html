@@ -1,0 +1,31 @@
+<!--
+File: project/templates/project/contact_confirm_delete.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: Confirmation page before deleting a Contact record -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}Delete Contact | Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Delete Contact</h2>
+</div>
+
+<div class="card" style="max-width: 600px;">
+    <p style="margin-bottom: 1.5rem;">
+        Are you sure you want to delete
+        <strong>{{ contact.first_name }} {{ contact.last_name }}</strong>
+        from {{ contact.company.name }}?
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-actions">
+            <input type="submit" value="Delete" style="background-color: #e74c3c; color: white; border: none; padding: 0.6rem 1.2rem; cursor: pointer; border-radius: 4px;">
+            <a href="{% url 'contact_detail' contact.pk %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

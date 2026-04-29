@@ -1,0 +1,52 @@
+<!--
+File: project/templates/project/contact_list.html
+Author: Arhan Sheth, 4/29/2026
+Email: aksheth@bu.edu
+Description: List page showing all professional contacts in the database -->
+
+{% extends 'project/base.html' %}
+
+{% block title %}Contacts | Job Application Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Contacts</h2>
+    <a href="{% url 'contact_create' %}" class="btn btn-success">+ New Contact</a>
+</div>
+
+<!-- if no contacts, show a friendly empty state instead of an empty table -->
+{% if contacts %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+                <tr>
+                    <td>
+                        <a href="{% url 'contact_detail' contact.pk %}">
+                            {{ contact.first_name }} {{ contact.last_name }}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'company_detail' contact.company.pk %}">
+                            {{ contact.company.name }}
+                        </a>
+                    </td>
+                    <td>{{ contact.role|default:"—" }}</td>
+                    <td>{{ contact.email|default:"—" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="card">
+        <p>No contacts yet. <a href="{% url 'contact_create' %}">Add your first one</a>.</p>
+    </div>
+{% endif %}
+{% endblock %}
